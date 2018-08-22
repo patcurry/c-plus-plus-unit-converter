@@ -3,10 +3,16 @@
 
 using namespace std;
 
+// conversion functions
+// starting with imperial to metric
 
+// length: feet and meters
+// obviously there are many more choices here, but we're starting simple
 
-float c_to_f(float t)
-{
+// volume: ounces and liters
+
+// temperature: fahrenheit and celsius
+float c_to_f(float t) {
     return 32 + (t * 9/5);
 }
 
@@ -14,8 +20,21 @@ float f_to_c(float t) {
     return (t-32) * 5/9;
 }
 
-int main()
-{
+// Make a function that asks the user what they want
+// to convert. As in "Are you converting a temperature, length or volume? 
+// please answer t for temperature, l for length and v for volume."
+char type_of_conversion(char t) {
+    const char *text =
+        "Will you be converting a temperature, "
+        "length or volume? Please answer t for "
+        "temperature, l for length and v for volume.";
+    cout << *text << endl;
+    cout << "Temperature converter!" << endl;
+
+    return 'a';
+}
+
+int main() {
     // These variables are internal, do I have to declare variables externally for any reason?
     // Variable definition:
     float degrees; 
