@@ -7,6 +7,7 @@ using namespace std;
 
 // conversion functions
 // should I be using classes?
+// I don't actually know if that would be helpful in any way.
 
 // length: inches, centimeters, feet, meters, miles, kilometers
 
@@ -189,8 +190,8 @@ string length_converter()
 
     string directions =
         "First enter the length size followed by the units, "
-        "then enter the units you want the length convered to: "
-        "c for centimeters, m for meters, k for kiometers, "
+        "then enter the units you want the length converted to: "
+        "c for centimeters, m for meters, k for kiolmeters, "
         "i for inches, f for feet and M for miles.";
 
     // this could be a function, should it be?
@@ -230,13 +231,16 @@ string temperature_converter()
     string s;
     ostringstream oss;
 
+    string directions =
+        "First enter the temperature in degrees, "
+        "then enter c for celcius or f for fahrenheit.";
+
     // this could be a function, should it be?
     // get the temperature to be converted
     cout << "Temperature converter!" << endl;
-    cout << "Please enter the temperature in degrees" << endl;
-    cin >> degrees;
-    cout << "Now enter c for celsius or f for fahrenheit" << endl;
-    cin >> temperature_type;
+    cout << directions << endl;
+    cin >> degrees >> temperature_type;
+    //cin >> temperature_type;
 
     // do the math
     // should this be a switch case?
