@@ -6,7 +6,7 @@
 using namespace std;
 
 // conversion functions
-// should I be using classes or something?
+// should I be using classes?
 
 // length: inches, centimeters, feet, meters, miles, kilometers
 
@@ -56,10 +56,6 @@ float length_switcher(float l, char fl, char tl)
     // l is "length"
     // fl is "from length"
     // to is "to length"
-
-    // the error catcher could be here
-    // if fl is not c, m, k, i, f, or M reject
-    // if l is not a number, reject
 
     switch (fl)
     {
@@ -210,21 +206,13 @@ string length_converter()
     // do the calculation
     res = length_switcher(size, f, t);
 
-    // deal with this later. it looks like a nother switch case
-    // make the original temperature type string
-    // temperature_type_string = (temperature_type == 'c') ? "celsius" : "fahrenheit";
-    // make the converted temperature type string
-    // converted_temperature_type = (temperature_type == 'c') ? "fahrenheit" : "celsius";
-
     // paste everything together
-    oss << size << " " << fl << " is " << res << " " << tl << endl;
+    oss << size << " " << f << " is " << res << " " << t << endl;
     s = oss.str();
 
     // return the string
     return s;
 }
-
-// volume: ounces and liters
 
 // temperature: fahrenheit and celsius
 float celsius_to_fahrenheit(float t) { return 32 + (t * 9 / 5); }
@@ -238,7 +226,6 @@ string temperature_converter()
     float degrees;
     float res;
     char temperature_type;
-    string temperature_type_string;
     string converted_temperature_type;
     string s;
     ostringstream oss;
@@ -256,14 +243,11 @@ string temperature_converter()
     // right now this works, but what about errors?
     res = (temperature_type == 'c') ? celsius_to_fahrenheit(degrees) : fahrenheit_to_celsius(degrees);
 
-    // make the original temperature type string
-    temperature_type_string = (temperature_type == 'c') ? "celsius" : "fahrenheit";
-
     // make the converted temperature type string
-    converted_temperature_type = (temperature_type == 'c') ? "fahrenheit" : "celsius";
+    converted_temperature_type = (temperature_type == 'c') ? 'f' : 'c';
 
     // paste everything together
-    oss << degrees << "° " << temperature_type_string << " is " << res << "° " << converted_temperature_type << endl;
+    oss << degrees << "° " << temperature_type << " is " << res << "° " << converted_temperature_type << endl;
     s = oss.str();
 
     // return the string
@@ -271,15 +255,15 @@ string temperature_converter()
 }
 
 // Make a function that asks the user what they want
-// it should return a char: t, l, or v
+// it should return a char: t or l
 char type_of_conversion()
 {
     // variables
     char x;
     string text =
-        "Will you be converting a temperature, "
-        "length or volume? Please answer t for "
-        "temperature, l for length and v for volume.";
+        "Will you be converting a temperature "
+        "or length? Please answer t for "
+        "temperature and l for length.";
 
     // ask user what they will be converting
     cout << text << endl;
@@ -294,9 +278,7 @@ string case_switcher(char oper)
     // this should probably be a function that takes oper
     // write switch case for temperature, length and volume
 
-    string l = "You chose length conversion!";
-    string v = "You chose volume conversion!";
-    string def = "I did not understand";
+    string def = "Please choose either t for temperature or l for length.";
 
     switch (oper)
     {
@@ -304,9 +286,6 @@ string case_switcher(char oper)
         return temperature_converter();
     case 'l':
         return length_converter();
-        // return l;
-    case 'v':
-        return v;
     default:
         return def;
     }
@@ -318,9 +297,7 @@ int main()
 
     // There needs to be a function that decides whether to go down the
     // temperature, length, or volume pathway
-    oper = type_of_conversion();
-
-    cout << case_switcher(oper) << endl;
+    cout << case_switcher(type_of_conversion()) << endl;
 
     return 0;
 }
