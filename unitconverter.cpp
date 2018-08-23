@@ -35,23 +35,12 @@ using namespace std;
 
 // metric to metric
 // up
-float centimeters_to_meters(float l) { return l * 100; }
-float meters_to_kilometers(float l) { return l * 1000; }
+float centimeters_to_meters(float l) { return l / 100; }
+float meters_to_kilometers(float l) { return l / 1000; }
 
 //down
-float kilometers_to_meters(float l) { return l / 1000; }
-float meters_to_centimeters(float l) { return l / 100; }
-
-/*
-// imperial to imperial
-// up
-float inches_to_feet(float l) { return l * 12; }
-float feet_to_miles(float l) { return l * 5280; }
-
-// down
-float miles_to_feet(float l) { return l / 12; }
-float feet_to_inches(float l) { return l / 12; }
-*/
+float kilometers_to_meters(float l) { return l * 1000; }
+float meters_to_centimeters(float l) { return l * 100; }
 
 // metric to imperial
 float centimeters_to_inches(float l) { return l * 0.3937; }
@@ -209,20 +198,18 @@ string length_converter()
     cout << directions << endl;
     cin >> size >> fl >> tl;
 
+    // do the calculation
+    res = length_switcher(size, fl, tl);
 
-    cout << length_switcher(size, fl, tl) << endl;
-
-    s = "hey";
-
+    // deal with this later. it looks like a nother switch case
     // make the original temperature type string
     // temperature_type_string = (temperature_type == 'c') ? "celsius" : "fahrenheit";
-
     // make the converted temperature type string
     // converted_temperature_type = (temperature_type == 'c') ? "fahrenheit" : "celsius";
 
     // paste everything together
-    // oss << degrees << "° " << temperature_type_string << " is " << res << "° " << converted_temperature_type << endl;
-    // s = oss.str();
+    oss << size << " " << fl << " is " << res << " " << tl << endl;
+    s = oss.str();
 
     // return the string
     return s;
