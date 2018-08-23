@@ -38,6 +38,110 @@ float inches_to_cm(float l) { return l / 0.3937; }
 float feet_to_meters(float l) { return l / 3.2808; }
 float miles_to_kilometers(float l) { return l / 0.621371; }
 
+// This is the function that asks the user for
+// the length input variables
+string length_converter()
+{
+    // the variables
+    float size;
+    float res;
+    char from_length_type;
+    char to_length_type;
+    // string length_type_string;
+    // string converted_length_type;
+    string s;
+    ostringstream oss;
+
+    string directions =
+        "First enter the length size followed by the units, "
+        "then enter the units you want the length convered to: "
+        "c for centimeters, m for meters, k for kiometers, "
+        "i for inches, f for feet and M for miles.";
+
+    // this could be a function, should it be?
+    // get the temperature to be converted
+    cout << "Length converter!" << endl;
+    cout << directions << endl;
+    cin >> size >> from_length_type >> to_length_type;
+
+    // do the math
+    // should this be a switch case?
+    // should this be something else?
+    // right now this works, but what about errors?
+    /*
+    // this seems too cumbersome
+    // metric
+    // up
+    case c to m
+    case c to k
+    case m to k
+
+    // down
+    case k to m
+    case k to c
+    case m to c
+
+    // imperial
+    // up
+    case i to f
+    case i to M
+    case f to M
+
+    // down
+    case M to f
+    case M to i
+    case f to i
+
+    // metric to imperial
+    // c
+    case c to i
+    case c to f
+    case c to M
+
+    // m
+    case m to i
+    case m to f
+    case m to M
+
+    // k
+    case k to i
+    case k to f
+    case k to M
+
+    // imperial to metric
+    // i
+    case i to c
+    case i to f
+    case i to k
+
+    // f
+    case f to c
+    case f to m
+    case f to k
+
+    // M
+    case M to c
+    case M to m
+    case M to k
+
+    default:
+      res = "I did not understand.";
+    */
+
+    // make the original temperature type string
+    // temperature_type_string = (temperature_type == 'c') ? "celsius" : "fahrenheit";
+
+    // make the converted temperature type string
+    // converted_temperature_type = (temperature_type == 'c') ? "fahrenheit" : "celsius";
+
+    // paste everything together
+    // oss << degrees << "° " << temperature_type_string << " is " << res << "° " << converted_temperature_type << endl;
+    // s = oss.str();
+
+    // return the string
+    return s;
+}
+
 // volume: ounces and liters
 
 // temperature: fahrenheit and celsius
