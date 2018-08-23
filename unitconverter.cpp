@@ -6,9 +6,32 @@
 using namespace std;
 
 // conversion functions
-// starting with imperial to metric
+// should I be using classes or something?
 
 // length: inches, centimeters, feet, meters, miles, kilometers
+
+// how critical is it to only have one flow direction?
+// for instance when converting from inches to kilometers
+// we could go from inches to centimeters, then from centimeters
+// to meters, then meters to kilometers
+// or
+// from inches to feet, then from feet to miles, then from
+// miles to kilometers
+// or something else all together.
+// maybe there should be metric to metric, metric to
+// imperial and imperial to metric but no imperial to
+// imperial
+//
+// for example, in the first picture below there are
+// many ways for one unit to get to another, but
+// in the second picture below there is only
+// one way to get from one unit to another
+//
+//  c----i       c----i
+//  |    |       |
+//  m----f  vs.  m----f
+//  |    |       |
+//  k----M       k----M
 
 // metric to metric
 // up
@@ -19,6 +42,7 @@ float meters_to_kilometers(float l) { return l * 1000; }
 float kilometers_to_meters(float l) { return l / 1000; }
 float meters_to_centimeters(float l) { return l / 100; }
 
+/*
 // imperial to imperial
 // up
 float inches_to_feet(float l) { return l * 12; }
@@ -27,16 +51,137 @@ float feet_to_miles(float l) { return l * 5280; }
 // down
 float miles_to_feet(float l) { return l / 12; }
 float feet_to_inches(float l) { return l / 12; }
+*/
 
 // metric to imperial
-float cm_to_inches(float l) { return l * 0.3937; }
+float centimeters_to_inches(float l) { return l * 0.3937; }
 float meters_to_feet(float l) { return l * 3.2808; }
 float kilometers_to_miles(float l) { return l * 0.621371; }
 
 // imperial to metric
-float inches_to_cm(float l) { return l / 0.3937; }
+float inches_to_centimeters(float l) { return l / 0.3937; }
 float feet_to_meters(float l) { return l / 3.2808; }
 float miles_to_kilometers(float l) { return l / 0.621371; }
+
+float length_switcher(float l, char fl, char tl)
+{
+    // it should be nested switch cases.
+
+    switch (fl)
+    {
+    // centimeters
+    case 'c':
+        switch (tl)
+        {
+        case 'm':
+            return centimeters_to_meters(l);
+        case 'k':
+            return meters_to_kilometers(centimeters_to_meters(l));
+        case 'i':
+            return centimeters_to_inches(l);
+        case 'f':
+            return meters_to_feet(centimeters_to_meters(l));
+        case 'M':
+            return kilometers_to_miles(meters_to_kilometers(centimeters_to_meters(l)));
+        default:
+            return 0;
+        }
+
+    // meters
+    case 'm':
+        switch (tl)
+        {
+        case 'c':
+            return meters_to_centimeters(l);
+        case 'k':
+            return meters_to_kilometers(l);
+        case 'i':
+            return centimeters_to_inches(meters_to_centimeters(l));
+        case 'f':
+            return meters_to_feet(l);
+        case 'M':
+            return kilometers_to_miles(meters_to_kilometers(l));
+        default:
+            return 0;
+        }
+
+    // kilometers
+    case 'k':
+        switch (tl)
+        {
+        case 'c':
+            return meters_to_centimeters(kilometers_to_meters(l));
+        case 'm':
+            return kilometers_to_meters(l);
+        case 'i':
+            return centimeters_to_inches(meters_to_centimeters(kilometers_to_meters(l)));
+        case 'f':
+            return meters_to_feet(kilometers_to_meters(l));
+        case 'M':
+            return kilometers_to_miles(l);
+        default:
+            return 0;
+        }
+
+    // inches
+    case 'i':
+        switch (tl)
+        {
+        case 'c':
+            return inches_to_centimeters(l);
+        case 'm':
+            return centimeters_to_meters(inches_to_centimeters(l));
+        case 'k':
+            return meters_to_kilometers(centimeters_to_meters(inches_to_centimeters(l)));
+        case 'f':
+            return meters_to_feet(centimeters_to_meters(inches_to_centimeters(l)));
+        case 'M':
+            return kilometers_to_miles(meters_to_kilometers(centimeters_to_meters(inches_to_centimeters(l))));
+        default:
+            return 0;
+        }
+
+    // feet
+    case 'f':
+        switch (tl)
+        {
+        case 'c':
+            return meters_to_centimeters(feet_to_meters(l));
+        case 'm':
+            return feet_to_meters(l);
+        case 'k':
+            return meters_to_kilometers(feet_to_meters(l));
+        case 'i':
+            return centimeters_to_inches(meters_to_centimeters(feet_to_meters(l)));
+        case 'M':
+            return kilometers_to_miles(meters_to_kilometers(feet_to_meters(l)));
+        default:
+            return 0;
+        }
+
+    // miles
+    case 'M':
+        switch (tl)
+        {
+        case 'c':
+            return miles_to_kilometers(kilometers_to_meters(meters_to_centimeters(l)));
+        case 'm':
+            return miles_to_kilometers(kilometers_to_meters(l));
+        case 'k':
+            return miles_to_kilometers(l);
+        case 'i':
+            return miles_to_kilometers(kilometers_to_meters(meters_to_centimeters(centimeters_to_inches(l))));
+        case 'f':
+            return miles_to_kilometers(kilometers_to_meters(meters_to_feet(l)));
+        default:
+            return 0;
+        }
+
+    // mistake
+    default:
+        return 0;
+    }
+}
 
 // This is the function that asks the user for
 // the length input variables
@@ -45,8 +190,8 @@ string length_converter()
     // the variables
     float size;
     float res;
-    char from_length_type;
-    char to_length_type;
+    char fl;
+    char tl;
     // string length_type_string;
     // string converted_length_type;
     string s;
@@ -62,71 +207,12 @@ string length_converter()
     // get the temperature to be converted
     cout << "Length converter!" << endl;
     cout << directions << endl;
-    cin >> size >> from_length_type >> to_length_type;
+    cin >> size >> fl >> tl;
 
-    // do the math
-    // should this be a switch case?
-    // should this be something else?
-    // right now this works, but what about errors?
-    /*
-    // this seems too cumbersome
-    // metric
-    // up
-    case c to m
-    case c to k
-    case m to k
 
-    // down
-    case k to m
-    case k to c
-    case m to c
+    cout << length_switcher(size, fl, tl) << endl;
 
-    // imperial
-    // up
-    case i to f
-    case i to M
-    case f to M
-
-    // down
-    case M to f
-    case M to i
-    case f to i
-
-    // metric to imperial
-    // c
-    case c to i
-    case c to f
-    case c to M
-
-    // m
-    case m to i
-    case m to f
-    case m to M
-
-    // k
-    case k to i
-    case k to f
-    case k to M
-
-    // imperial to metric
-    // i
-    case i to c
-    case i to f
-    case i to k
-
-    // f
-    case f to c
-    case f to m
-    case f to k
-
-    // M
-    case M to c
-    case M to m
-    case M to k
-
-    default:
-      res = "I did not understand.";
-    */
+    s = "hey";
 
     // make the original temperature type string
     // temperature_type_string = (temperature_type == 'c') ? "celsius" : "fahrenheit";
@@ -221,8 +307,8 @@ string case_switcher(char oper)
     case 't':
         return temperature_converter();
     case 'l':
-        // return length_converter();
-        return l;
+        return length_converter();
+        // return l;
     case 'v':
         return v;
     default:
