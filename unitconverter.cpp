@@ -8,21 +8,41 @@ using namespace std;
 // conversion functions
 // starting with imperial to metric
 
-// length: feet and meters
-// obviously there are many more choices here, but we're starting simple
+// length: inches, centimeters, feet, meters, miles, kilometers
+
+// metric to metric
+// up
+float centimeters_to_meters(float l) { return l * 100; }
+float meters_to_kilometers(float l) { return l * 1000; }
+
+//down
+float kilometers_to_meters(float l) { return l / 1000; }
+float meters_to_centimeters(float l) { return l / 100; }
+
+// imperial to imperial
+// up
+float inches_to_feet(float l) { return l * 12; }
+float feet_to_miles(float l) { return l * 5280; }
+
+// down
+float miles_to_feet(float l) { return l / 12; }
+float feet_to_inches(float l) { return l / 12; }
+
+// metric to imperial
+float cm_to_inches(float l) { return l * 0.3937; }
+float meters_to_feet(float l) { return l * 3.2808; }
+float kilometers_to_miles(float l) { return l * 0.621371; }
+
+// imperial to metric
+float inches_to_cm(float l) { return l / 0.3937; }
+float feet_to_meters(float l) { return l / 3.2808; }
+float miles_to_kilometers(float l) { return l / 0.621371; }
 
 // volume: ounces and liters
 
 // temperature: fahrenheit and celsius
-float c_to_f(float t)
-{
-    return 32 + (t * 9 / 5);
-}
-
-float f_to_c(float t)
-{
-    return (t - 32) * 5 / 9;
-}
+float celsius_to_fahrenheit(float t) { return 32 + (t * 9 / 5); }
+float fahrenheit_to_celsius(float t) { return (t - 32) * 5 / 9; }
 
 // This is the function that asks the user for
 // the temperature input variables
@@ -46,7 +66,9 @@ string temperature_converter()
     cin >> temperature_type;
 
     // do the math
-    res = (temperature_type == 'c') ? c_to_f(degrees) : f_to_c(degrees);
+    // should this be a switch case?
+    // right now this works, but what about errors?
+    res = (temperature_type == 'c') ? celsius_to_fahrenheit(degrees) : fahrenheit_to_celsius(degrees);
 
     // make the original temperature type string
     temperature_type_string = (temperature_type == 'c') ? "celsius" : "fahrenheit";
@@ -95,6 +117,7 @@ string case_switcher(char oper)
     case 't':
         return temperature_converter();
     case 'l':
+        // return length_converter();
         return l;
     case 'v':
         return v;
