@@ -11,17 +11,6 @@ using namespace std;
 // length: inches, centimeters, feet, meters, miles, kilometers
 
 // how critical is it to only have one flow direction?
-// for instance when converting from inches to kilometers
-// we could go from inches to centimeters, then from centimeters
-// to meters, then meters to kilometers
-// or
-// from inches to feet, then from feet to miles, then from
-// miles to kilometers
-// or something else all together.
-// maybe there should be metric to metric, metric to
-// imperial and imperial to metric but no imperial to
-// imperial
-//
 // for example, in the first picture below there are
 // many ways for one unit to get to another, but
 // in the second picture below there is only
@@ -54,7 +43,23 @@ float miles_to_kilometers(float l) { return l / 0.621371; }
 
 float length_switcher(float l, char fl, char tl)
 {
-    // it should be nested switch cases.
+    // perhaps this should return a string
+    // that would make it easier to denote errors
+    // no number would be appropriate for errors
+    // is there an NA value?
+    // maybe if there is an error it should just
+    // return the same value
+    // or the error could be caught before this step
+    // that would be better
+
+    // variables
+    // l is "length"
+    // fl is "from length"
+    // to is "to length"
+
+    // the error catcher could be here
+    // if fl is not c, m, k, i, f, or M reject
+    // if l is not a number, reject
 
     switch (fl)
     {
@@ -73,7 +78,7 @@ float length_switcher(float l, char fl, char tl)
         case 'M':
             return kilometers_to_miles(meters_to_kilometers(centimeters_to_meters(l)));
         default:
-            return 0;
+            return l;
         }
 
     // meters
@@ -91,7 +96,7 @@ float length_switcher(float l, char fl, char tl)
         case 'M':
             return kilometers_to_miles(meters_to_kilometers(l));
         default:
-            return 0;
+            return l;
         }
 
     // kilometers
@@ -109,7 +114,7 @@ float length_switcher(float l, char fl, char tl)
         case 'M':
             return kilometers_to_miles(l);
         default:
-            return 0;
+            return l;
         }
 
     // inches
@@ -127,7 +132,7 @@ float length_switcher(float l, char fl, char tl)
         case 'M':
             return kilometers_to_miles(meters_to_kilometers(centimeters_to_meters(inches_to_centimeters(l))));
         default:
-            return 0;
+            return l;
         }
 
     // feet
@@ -145,7 +150,7 @@ float length_switcher(float l, char fl, char tl)
         case 'M':
             return kilometers_to_miles(meters_to_kilometers(feet_to_meters(l)));
         default:
-            return 0;
+            return l;
         }
 
     // miles
@@ -163,12 +168,12 @@ float length_switcher(float l, char fl, char tl)
         case 'f':
             return miles_to_kilometers(kilometers_to_meters(meters_to_feet(l)));
         default:
-            return 0;
+            return l;
         }
 
     // mistake
     default:
-        return 0;
+        return l;
     }
 }
 
@@ -179,8 +184,8 @@ string length_converter()
     // the variables
     float size;
     float res;
-    char fl;
-    char tl;
+    char f;
+    char t;
     // string length_type_string;
     // string converted_length_type;
     string s;
@@ -196,10 +201,14 @@ string length_converter()
     // get the temperature to be converted
     cout << "Length converter!" << endl;
     cout << directions << endl;
-    cin >> size >> fl >> tl;
+    cin >> size >> f >> t;
+
+    // the error catcher could be here
+    // if fl and tl are not c, m, k, i, f, or M reject
+    // if size is not a number, reject
 
     // do the calculation
-    res = length_switcher(size, fl, tl);
+    res = length_switcher(size, f, t);
 
     // deal with this later. it looks like a nother switch case
     // make the original temperature type string
